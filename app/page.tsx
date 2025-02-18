@@ -43,8 +43,8 @@ export default function Page() {
       </div>
 
       {/* Meal Selection Section */}
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+      <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
+        <div className="grid md:grid-cols-2 gap-6">
           {/* Cuisine Type Card */}
           <div 
             className="bg-zinc-800/50 rounded-lg p-5 sm:p-8 hover:bg-zinc-800/70 transition-all duration-300 cursor-pointer relative overflow-hidden"

@@ -79,6 +79,7 @@ export default function CuisinesPage() {
           .from('meals')
           .select('*')
           .eq('cuisine', selectedCuisine)
+          .order('meal_name')
         
         if (error) throw error
         
