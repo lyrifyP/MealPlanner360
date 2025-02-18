@@ -15,7 +15,7 @@ import { ChevronDown, Utensils, Clock, Loader2 } from "lucide-react"
 type Meal = {
   id: number
   meal_name: string
-  ingredients: string[]
+  ingredients: (string | Ingredient)[]
   protein: number
   carbs: number
   fat: number
@@ -184,14 +184,28 @@ export default function CuisinesPage() {
                   <div className="mb-4">
                     <h4 className="text-sm font-semibold text-zinc-300 mb-2">Ingredients:</h4>
                     <div className="flex flex-wrap gap-2">
-                      {meal.ingredients.map((ingredient: Ingredient, index: number) => (
-                        <span 
-                          key={index}
-                          className="text-xs bg-zinc-700 text-zinc-300 px-2 py-1 rounded"
-                        >
-                          {ingredient.quantity} {ingredient.ingredientName}
-                        </span>
-                      ))}
+                      {Array.isArray(meal.ingredients) ? (
+                        meal.ingredients.map((ingredient, index) => (
+                          <span 
+                            key={index}
+                            className="text-xs bg-zinc-700 text-zinc-300 px-2 py-1 rounded"
+                          >
+                            {typeof ingredient === 'object' && 'quantity' in ingredient
+                              ? `${ingredient.quantity} ${ingredient.ingredientName}`
+                              : ingredient}
+                          </span>
+                        ))
+                      ) : (
+                        // If ingredients is an object, convert to array
+                        Object.entries(meal.ingredients as Record<string, Ingredient>).map(([key, value], index) => (
+                          <span 
+                            key={index}
+                            className="text-xs bg-zinc-700 text-zinc-300 px-2 py-1 rounded"
+                          >
+                            {`${value.quantity} ${value.ingredientName}`}
+                          </span>
+                        ))
+                      )}
                     </div>
                   </div>
 
