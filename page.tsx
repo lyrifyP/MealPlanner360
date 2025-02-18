@@ -50,30 +50,34 @@ export default function Home() {
       </div>
 
       {/* Meal Selection Section */}
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-8">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="grid md:grid-cols-2 gap-8 max-w-7xl mx-auto">
           {/* Cuisine Type Card */}
-          <div className="bg-zinc-800/50 rounded-xl p-8 hover:bg-zinc-800/70 transition-colors cursor-pointer">
+          <div className="bg-zinc-800/50 rounded-xl p-6 sm:p-8 hover:bg-zinc-800/70 transition-colors cursor-pointer">
             <h2 className="text-2xl font-bold text-white mb-4">Browse by Cuisine</h2>
             <p className="text-zinc-400 mb-6">
               Explore dishes from Italian, Japanese, Mexican, Indian, and many more cuisines from around the world.
             </p>
-            <Link href="/cuisines">
-              <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
-                Explore Cuisines
-              </Button>
-            </Link>
+            <div className="flex justify-center">
+              <Link href="/cuisines">
+                <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
+                  Explore Cuisines
+                </Button>
+              </Link>
+            </div>
           </div>
 
           {/* Popular Restaurant Card */}
-          <div className="bg-zinc-800/50 rounded-xl p-8 hover:bg-zinc-800/70 transition-colors cursor-pointer">
+          <div className="bg-zinc-800/50 rounded-xl p-6 sm:p-8 hover:bg-zinc-800/70 transition-colors cursor-pointer">
             <h2 className="text-2xl font-bold text-white mb-4">Popular Restaurant Dishes</h2>
             <p className="text-zinc-400 mb-6">
               Learn to make your favorite restaurant meals at home with our curated collection of copycat recipes.
             </p>
-            <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
-              View Restaurant Dishes
-            </Button>
+            <div className="flex justify-center">
+              <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
+                View Restaurant Dishes
+              </Button>
+            </div>
           </div>
         </div>
       </div>
