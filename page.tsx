@@ -51,11 +51,11 @@ export default function Home() {
 
       {/* Meal Selection Section */}
       <div className="container mx-auto px-4 sm:px-6">
-        <div className="grid md:grid-cols-2 gap-8 max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {/* Cuisine Type Card */}
-          <div className="bg-zinc-800/50 rounded-xl p-6 sm:p-8 hover:bg-zinc-800/70 transition-colors cursor-pointer">
-            <h2 className="text-2xl font-bold text-white mb-4">Browse by Cuisine</h2>
-            <p className="text-zinc-400 mb-6">
+          <div className="bg-zinc-800/50 rounded-lg p-5 sm:p-8 hover:bg-zinc-800/70 transition-colors cursor-pointer">
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">Browse by Cuisine</h2>
+            <p className="text-sm sm:text-base text-zinc-400 mb-4 sm:mb-6">
               Explore dishes from Italian, Japanese, Mexican, Indian, and many more cuisines from around the world.
             </p>
             <div className="flex justify-center">
@@ -68,9 +68,9 @@ export default function Home() {
           </div>
 
           {/* Popular Restaurant Card */}
-          <div className="bg-zinc-800/50 rounded-xl p-6 sm:p-8 hover:bg-zinc-800/70 transition-colors cursor-pointer">
-            <h2 className="text-2xl font-bold text-white mb-4">Popular Restaurant Dishes</h2>
-            <p className="text-zinc-400 mb-6">
+          <div className="bg-zinc-800/50 rounded-lg p-5 sm:p-8 hover:bg-zinc-800/70 transition-colors cursor-pointer">
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">Popular Restaurant Dishes</h2>
+            <p className="text-sm sm:text-base text-zinc-400 mb-4 sm:mb-6">
               Learn to make your favorite restaurant meals at home with our curated collection of copycat recipes.
             </p>
             <div className="flex justify-center">
