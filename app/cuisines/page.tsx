@@ -96,16 +96,26 @@ export default function CuisinesPage() {
     fetchMealsByCuisine()
   }, [selectedCuisine])
 
-  const toggleMealSelection = (mealId: number) => {
-    setSelectedMeals(prev => {
-      const newSelection = new Set(prev)
-      if (newSelection.has(mealId)) {
-        newSelection.delete(mealId)
-      } else {
-        newSelection.add(mealId)
-      }
-      return newSelection
-    })
+  useEffect(() => {
+    console.log('Component mounted');
+    const storedMealIds = JSON.parse(localStorage.getItem('selectedMealIds') || '[]')
+    console.log('Retrieved from localStorage:', storedMealIds);
+    setSelectedMeals(new Set(storedMealIds))
+  }, [])
+
+  const handleAddToList = (mealId: number) => {
+    const updatedSelection = new Set(selectedMeals)
+    if (updatedSelection.has(mealId)) {
+      updatedSelection.delete(mealId)
+    } else {
+      updatedSelection.add(mealId)
+    }
+
+    // Store in localStorage
+    localStorage.setItem('selectedMealIds', JSON.stringify([...updatedSelection]))
+    
+    // Update state
+    setSelectedMeals(updatedSelection)
   }
 
   return (
@@ -205,7 +215,7 @@ export default function CuisinesPage() {
                           ? 'bg-red-500 hover:bg-red-600'
                           : 'bg-zinc-600 hover:bg-zinc-700'
                       } text-white`}
-                      onClick={() => toggleMealSelection(meal.id)}
+                      onClick={() => handleAddToList(meal.id)}
                     >
                       {selectedMeals.has(meal.id) ? 'Remove' : 'Add to List'}
                     </Button>

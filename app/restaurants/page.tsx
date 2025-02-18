@@ -97,6 +97,12 @@ export default function RestaurantsPage() {
     fetchMealsByRestaurant()
   }, [selectedRestaurant])
 
+  // Add this to both pages after the selectedMeals state declaration
+  useEffect(() => {
+    const storedMealIds = JSON.parse(localStorage.getItem('selectedMealIds') || '[]')
+    setSelectedMeals(new Set(storedMealIds))
+  }, [])
+
   const toggleMealSelection = (mealId: number) => {
     setSelectedMeals(prev => {
       const newSelection = new Set(prev)
@@ -105,6 +111,10 @@ export default function RestaurantsPage() {
       } else {
         newSelection.add(mealId)
       }
+      
+      // Store in localStorage
+      localStorage.setItem('selectedMealIds', JSON.stringify([...newSelection]))
+      
       return newSelection
     })
   }
