@@ -58,9 +58,11 @@ export default function Home() {
             <p className="text-zinc-400 mb-6">
               Explore dishes from Italian, Japanese, Mexican, Indian, and many more cuisines from around the world.
             </p>
-            <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
-              Explore Cuisines
-            </Button>
+            <Link href="/cuisines">
+              <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
+                Explore Cuisines
+              </Button>
+            </Link>
           </div>
 
           {/* Popular Restaurant Card */}
