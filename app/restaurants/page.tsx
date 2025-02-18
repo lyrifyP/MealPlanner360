@@ -10,7 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Utensils, Loader2 } from "lucide-react"
+import { Utensils, Loader2, ShoppingCart } from "lucide-react"
+import Link from "next/link"
 
 // Reuse the same types from cuisines page
 type Meal = {
@@ -40,6 +41,7 @@ export default function RestaurantsPage() {
   const [selectedRestaurant, setSelectedRestaurant] = useState<string>("")
   const [restaurants, setRestaurants] = useState<string[]>([])
   const [meals, setMeals] = useState<Meal[]>([])
+  const [selectedMeals, setSelectedMeals] = useState<Set<number>>(new Set())
   const [isLoading, setIsLoading] = useState(true)
   const [isMealsLoading, setIsMealsLoading] = useState(false)
   
@@ -95,9 +97,31 @@ export default function RestaurantsPage() {
     fetchMealsByRestaurant()
   }, [selectedRestaurant])
 
+  const toggleMealSelection = (mealId: number) => {
+    setSelectedMeals(prev => {
+      const newSelection = new Set(prev)
+      if (newSelection.has(mealId)) {
+        newSelection.delete(mealId)
+      } else {
+        newSelection.add(mealId)
+      }
+      return newSelection
+    })
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-white mb-8">Restaurant Favorites</h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold text-white">Restaurant Favorites</h1>
+        {selectedMeals.size > 0 && (
+          <Link href="/shopping-list">
+            <Button className="bg-emerald-500 hover:bg-emerald-600">
+              <ShoppingCart className="mr-2 h-4 w-4" />
+              View Shopping List ({selectedMeals.size})
+            </Button>
+          </Link>
+        )}
+      </div>
       
       {/* Restaurant Selector */}
       <div className="max-w-md mx-auto mb-12">
@@ -132,10 +156,10 @@ export default function RestaurantsPage() {
             meals.map((meal) => (
               <div 
                 key={meal.id}
-                className="bg-zinc-800/50 rounded-lg overflow-hidden hover:bg-zinc-800/70 transition-colors flex flex-col h-full"
+                className="bg-zinc-800/50 rounded-lg overflow-hidden hover:bg-zinc-800/70 transition-colors"
               >
                 {/* Meal Image */}
-                <div className="h-48 bg-zinc-700 relative flex-shrink-0">
+                <div className="h-48 bg-zinc-700 relative">
                   {meal.image_url ? (
                     <img 
                       src={meal.image_url} 
@@ -150,25 +174,12 @@ export default function RestaurantsPage() {
                 </div>
 
                 {/* Meal Content */}
-                <div className="p-6 flex flex-col flex-grow">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="text-xl font-semibold text-white">{meal.meal_name}</h3>
-                    <span className={`text-xs px-2 py-1 rounded ${
-                      meal.vegetarian_non_veg === 'Vegetarian' 
-                        ? 'bg-green-500/20 text-green-300'
-                        : 'bg-red-500/20 text-red-300'
-                    }`}>
-                      {meal.vegetarian_non_veg}
-                    </span>
-                  </div>
-
-                  {/* Cuisine */}
-                  <div className="text-sm text-zinc-400 mb-4">
-                    Cuisine: {meal.cuisine}
-                  </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-white mb-2">{meal.meal_name}</h3>
+                  <p className="text-sm text-zinc-400 mb-4">Cuisine: {meal.cuisine}</p>
 
                   {/* Macros */}
-                  <div className="grid grid-cols-4 gap-2 mb-4">
+                  <div className="grid grid-cols-4 gap-2 mb-6">
                     {[
                       { label: 'Protein', value: meal.protein },
                       { label: 'Carbs', value: meal.carbs },
@@ -182,37 +193,23 @@ export default function RestaurantsPage() {
                     ))}
                   </div>
 
-                  {/* Ingredients */}
-                  <div className="mb-4">
-                    <h4 className="text-sm font-semibold text-zinc-300 mb-2">Ingredients:</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {Array.isArray(meal.ingredients) ? (
-                        meal.ingredients.map((ingredient, index) => (
-                          <span 
-                            key={index}
-                            className="text-xs bg-zinc-700 text-zinc-300 px-2 py-1 rounded"
-                          >
-                            {typeof ingredient === 'object' && 'quantity' in ingredient
-                              ? `${ingredient.quantity} ${ingredient.ingredientName}`
-                              : ingredient}
-                          </span>
-                        ))
-                      ) : (
-                        Object.entries(meal.ingredients as Record<string, Ingredient>).map(([key, value], index) => (
-                          <span 
-                            key={index}
-                            className="text-xs bg-zinc-700 text-zinc-300 px-2 py-1 rounded"
-                          >
-                            {`${value.quantity} ${value.ingredientName}`}
-                          </span>
-                        ))
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="mt-auto pt-4">
-                    <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white">
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <Button 
+                      className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white"
+                      onClick={() => {/* View Recipe handler */}}
+                    >
                       View Recipe
+                    </Button>
+                    <Button 
+                      className={`flex-1 ${
+                        selectedMeals.has(meal.id)
+                          ? 'bg-red-500 hover:bg-red-600'
+                          : 'bg-zinc-600 hover:bg-zinc-700'
+                      } text-white`}
+                      onClick={() => toggleMealSelection(meal.id)}
+                    >
+                      {selectedMeals.has(meal.id) ? 'Remove' : 'Add to List'}
                     </Button>
                   </div>
                 </div>
