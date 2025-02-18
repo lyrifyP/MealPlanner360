@@ -7,16 +7,23 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 
 export default function Page() {
-  const [isHovering, setIsHovering] = useState(false);
+  const [isHovering, setIsHovering] = useState({ cuisine: false, restaurant: false });
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingRestaurant, setIsLoadingRestaurant] = useState(false);
   const router = useRouter();
 
   const handleExplore = async (e: React.MouseEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate a short loading state before navigation
     await new Promise(resolve => setTimeout(resolve, 800));
     router.push('/cuisines');
+  };
+
+  const handleRestaurantExplore = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsLoadingRestaurant(true);
+    await new Promise(resolve => setTimeout(resolve, 800));
+    router.push('/restaurants');
   };
 
   return (
@@ -48,11 +55,11 @@ export default function Page() {
           {/* Cuisine Type Card */}
           <div 
             className="bg-zinc-800/50 rounded-lg p-5 sm:p-8 hover:bg-zinc-800/70 transition-all duration-300 cursor-pointer relative overflow-hidden"
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
+            onMouseEnter={() => setIsHovering(prev => ({...prev, cuisine: true}))}
+            onMouseLeave={() => setIsHovering(prev => ({...prev, cuisine: false}))}
           >
             <div className={`absolute inset-0 bg-emerald-500/10 transform transition-transform duration-500 ease-in-out ${
-              isHovering ? 'scale-100' : 'scale-0'
+              isHovering.cuisine ? 'scale-100' : 'scale-0'
             }`} />
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 relative z-10">Browse by Cuisine</h2>
             <p className="text-sm sm:text-base text-zinc-400 mb-4 sm:mb-6 relative z-10">
@@ -63,7 +70,7 @@ export default function Page() {
                 onClick={handleExplore}
                 disabled={isLoading}
                 className={`bg-emerald-500 hover:bg-emerald-600 text-white transform transition-all duration-300 ${
-                  isHovering && !isLoading ? 'scale-105 shadow-lg shadow-emerald-500/20' : ''
+                  isHovering.cuisine && !isLoading ? 'scale-105 shadow-lg shadow-emerald-500/20' : ''
                 }`}
               >
                 {isLoading ? (
@@ -79,14 +86,34 @@ export default function Page() {
           </div>
 
           {/* Popular Restaurant Card */}
-          <div className="bg-zinc-800/50 rounded-lg p-5 sm:p-8 hover:bg-zinc-800/70 transition-colors cursor-pointer">
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">Popular Restaurant Dishes</h2>
-            <p className="text-sm sm:text-base text-zinc-400 mb-4 sm:mb-6">
+          <div 
+            className="bg-zinc-800/50 rounded-lg p-5 sm:p-8 hover:bg-zinc-800/70 transition-all duration-300 cursor-pointer relative overflow-hidden"
+            onMouseEnter={() => setIsHovering(prev => ({...prev, restaurant: true}))}
+            onMouseLeave={() => setIsHovering(prev => ({...prev, restaurant: false}))}
+          >
+            <div className={`absolute inset-0 bg-emerald-500/10 transform transition-transform duration-500 ease-in-out ${
+              isHovering.restaurant ? 'scale-100' : 'scale-0'
+            }`} />
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 relative z-10">Popular Restaurant Dishes</h2>
+            <p className="text-sm sm:text-base text-zinc-400 mb-4 sm:mb-6 relative z-10">
               Learn to make your favorite restaurant meals at home with our curated collection of copycat recipes.
             </p>
-            <div className="flex justify-center">
-              <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
-                View Restaurant Dishes
+            <div className="flex justify-center relative z-10">
+              <Button 
+                onClick={handleRestaurantExplore}
+                disabled={isLoadingRestaurant}
+                className={`bg-emerald-500 hover:bg-emerald-600 text-white transform transition-all duration-300 ${
+                  isHovering.restaurant && !isLoadingRestaurant ? 'scale-105 shadow-lg shadow-emerald-500/20' : ''
+                }`}
+              >
+                {isLoadingRestaurant ? (
+                  <div className="flex items-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <span>Loading...</span>
+                  </div>
+                ) : (
+                  'View Restaurant Dishes'
+                )}
               </Button>
             </div>
           </div>

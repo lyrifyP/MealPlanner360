@@ -10,8 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { ChevronDown, Utensils, Clock, Loader2 } from "lucide-react"
+import { Utensils, Loader2 } from "lucide-react"
 
+// Reuse the same types from cuisines page
 type Meal = {
   id: number
   meal_name: string
@@ -35,50 +36,50 @@ type Ingredient = {
   ingredientName: string;
 }
 
-export default function CuisinesPage() {
-  const [selectedCuisine, setSelectedCuisine] = useState<string>("")
-  const [cuisines, setCuisines] = useState<string[]>([])
+export default function RestaurantsPage() {
+  const [selectedRestaurant, setSelectedRestaurant] = useState<string>("")
+  const [restaurants, setRestaurants] = useState<string[]>([])
   const [meals, setMeals] = useState<Meal[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isMealsLoading, setIsMealsLoading] = useState(false)
   
   const supabase = createClientComponentClient()
 
-  // Fetch unique cuisines for dropdown
+  // Fetch unique restaurants for dropdown
   useEffect(() => {
-    async function fetchCuisines() {
+    async function fetchRestaurants() {
       try {
         const { data, error } = await supabase
           .from('meals')
-          .select('cuisine')
-          .order('cuisine')
+          .select('popular_restaurant')
+          .not('popular_restaurant', 'is', null)
+          .order('popular_restaurant')
 
         if (error) throw error
         
-        // Get unique cuisines using Set
-        const uniqueCuisines = [...new Set(data.map(item => item.cuisine))];
-        setCuisines(uniqueCuisines)
+        const uniqueRestaurants = [...new Set(data.map(item => item.popular_restaurant))].filter(Boolean);
+        setRestaurants(uniqueRestaurants as string[])
       } catch (error) {
-        console.error('Error fetching cuisines:', error)
+        console.error('Error fetching restaurants:', error)
       } finally {
         setIsLoading(false)
       }
     }
 
-    fetchCuisines()
+    fetchRestaurants()
   }, [])
 
-  // Fetch meals when cuisine is selected
+  // Fetch meals when restaurant is selected
   useEffect(() => {
-    async function fetchMealsByCuisine() {
-      if (!selectedCuisine) return
+    async function fetchMealsByRestaurant() {
+      if (!selectedRestaurant) return
       
       setIsMealsLoading(true)
       try {
         const { data, error } = await supabase
           .from('meals')
           .select('*')
-          .eq('cuisine', selectedCuisine)
+          .eq('popular_restaurant', selectedRestaurant)
           .order('meal_name')
         
         if (error) throw error
@@ -91,28 +92,28 @@ export default function CuisinesPage() {
       }
     }
 
-    fetchMealsByCuisine()
-  }, [selectedCuisine])
+    fetchMealsByRestaurant()
+  }, [selectedRestaurant])
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-white mb-8">Explore Cuisines</h1>
+      <h1 className="text-3xl font-bold text-white mb-8">Restaurant Favorites</h1>
       
-      {/* Cuisine Selector */}
+      {/* Restaurant Selector */}
       <div className="max-w-md mx-auto mb-12">
         {isLoading ? (
           <div className="flex items-center justify-center">
             <Loader2 className="h-6 w-6 animate-spin text-emerald-500" />
           </div>
         ) : (
-          <Select onValueChange={setSelectedCuisine}>
+          <Select onValueChange={setSelectedRestaurant}>
             <SelectTrigger className="w-full bg-zinc-800 text-white border-zinc-700">
-              <SelectValue placeholder="Select a cuisine" />
+              <SelectValue placeholder="Select a restaurant" />
             </SelectTrigger>
             <SelectContent className="bg-zinc-800 text-white border-zinc-700">
-              {cuisines.map((cuisine) => (
-                <SelectItem key={cuisine} value={cuisine} className="hover:bg-zinc-700">
-                  {cuisine}
+              {restaurants.map((restaurant) => (
+                <SelectItem key={restaurant} value={restaurant} className="hover:bg-zinc-700">
+                  {restaurant}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -121,7 +122,7 @@ export default function CuisinesPage() {
       </div>
 
       {/* Meals Grid */}
-      {selectedCuisine && (
+      {selectedRestaurant && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {isMealsLoading ? (
             <div className="col-span-full flex justify-center">
@@ -161,9 +162,9 @@ export default function CuisinesPage() {
                     </span>
                   </div>
 
-                  {/* Complexity */}
+                  {/* Cuisine */}
                   <div className="text-sm text-zinc-400 mb-4">
-                    Complexity: {meal.complexity}
+                    Cuisine: {meal.cuisine}
                   </div>
 
                   {/* Macros */}
@@ -197,7 +198,6 @@ export default function CuisinesPage() {
                           </span>
                         ))
                       ) : (
-                        // If ingredients is an object, convert to array
                         Object.entries(meal.ingredients as Record<string, Ingredient>).map(([key, value], index) => (
                           <span 
                             key={index}
@@ -209,22 +209,6 @@ export default function CuisinesPage() {
                       )}
                     </div>
                   </div>
-
-                  {/* Tags */}
-                  {meal.tags && meal.tags.length > 0 && (
-                    <div className="mb-4">
-                      <div className="flex flex-wrap gap-2">
-                        {meal.tags.map((tag, index) => (
-                          <span 
-                            key={index}
-                            className="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
 
                   <div className="mt-auto pt-4">
                     <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white">
