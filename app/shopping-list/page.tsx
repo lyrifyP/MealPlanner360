@@ -128,89 +128,53 @@ export default function ShoppingListPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
-        <div className="flex items-center gap-4">
-          <Link href="/restaurants">
-            <Button variant="ghost" className="text-zinc-400 hover:text-white">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Restaurants
-            </Button>
-          </Link>
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white">Shopping List</h1>
-        {selectedMeals.length > 0 && (
-          <Button 
-            variant="destructive" 
-            onClick={clearShoppingList}
-            className="bg-red-500 hover:bg-red-600 sm:ml-auto"
-          >
-            <Trash2 className="h-4 w-4 mr-2" />
-            Clear List
-          </Button>
-        )}
+      <h1 className="text-3xl font-bold text-white mb-8">Shopping List</h1>
+
+      {/* Combined Ingredients Section */}
+      <div className="bg-zinc-800/50 rounded-lg p-6 mb-8 w-full">
+        <h2 className="text-xl font-semibold text-white mb-4">Shopping List Summary</h2>
+        <ul className="space-y-3">
+          {Object.entries(combinedIngredients)
+            .sort(([nameA], [nameB]) => nameA.localeCompare(nameB))
+            .map(([name, data]) => (
+              <li 
+                key={name}
+                className="flex justify-between text-sm border-b border-zinc-700 pb-2 last:border-0 last:pb-0"
+              >
+                <span className="text-zinc-300">{name}</span>
+                <span className="text-emerald-500 font-medium">{data.quantity}</span>
+              </li>
+            ))}
+        </ul>
       </div>
 
-      {selectedMeals.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-zinc-400">No meals selected. Add some meals to create your shopping list!</p>
-          <Link href="/restaurants">
-            <Button className="mt-4 bg-emerald-500 hover:bg-emerald-600">
-              Browse Restaurants
-            </Button>
-          </Link>
-        </div>
-      ) : (
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* Selected Meals */}
-          <div>
-            <h2 className="text-xl font-semibold text-white mb-4">Selected Meals</h2>
-            <div className="space-y-4">
-              {selectedMeals.map(meal => (
-                <div 
-                  key={meal.id}
-                  className="bg-zinc-800/50 rounded-lg p-4 flex items-center gap-4"
-                >
-                  <div className="h-16 w-16 bg-zinc-700 rounded overflow-hidden flex-shrink-0">
-                    {meal.image_url ? (
-                      <img 
-                        src={meal.image_url} 
-                        alt={meal.meal_name}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-zinc-500">
-                        <span className="text-xs">No image</span>
-                      </div>
-                    )}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-white font-medium truncate">{meal.meal_name}</h3>
-                    <p className="text-sm text-zinc-400">{meal.ingredients.length} ingredients</p>
-                  </div>
+      {/* Selected Meals Section */}
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {selectedMeals.map(meal => (
+          <div 
+            key={meal.id}
+            className="bg-zinc-800/50 rounded-lg p-4 flex items-center gap-4"
+          >
+            <div className="h-16 w-16 bg-zinc-700 rounded overflow-hidden flex-shrink-0">
+              {meal.image_url ? (
+                <img 
+                  src={meal.image_url} 
+                  alt={meal.meal_name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-zinc-500">
+                  <span className="text-xs">No image</span>
                 </div>
-              ))}
+              )}
+            </div>
+            <div className="min-w-0 flex-1">
+              <h3 className="text-white font-medium truncate">{meal.meal_name}</h3>
+              <p className="text-sm text-zinc-400">{meal.ingredients.length} ingredients</p>
             </div>
           </div>
-
-          {/* Combined Ingredients */}
-          <div>
-            <h2 className="text-xl font-semibold text-white mb-4">Combined Ingredients</h2>
-            <div className="bg-zinc-800/50 rounded-lg p-6">
-              <div className="space-y-4">
-                {Object.entries(combinedIngredients).map(([ingredient, details]) => (
-                  <div key={ingredient} className="flex justify-between items-start pb-4 border-b border-zinc-700 gap-4">
-                    <div className="min-w-0 flex-1">
-                      <p className="text-white font-medium truncate">{ingredient}</p>
-                      <p className="text-sm text-zinc-400 truncate">Used in: {details.meals.join(', ')}</p>
-                    </div>
-                    <span className="text-emerald-500 font-medium whitespace-nowrap">{details.quantity}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+        ))}
+      </div>
     </div>
   )
 } 

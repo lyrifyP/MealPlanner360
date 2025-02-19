@@ -126,20 +126,13 @@ export default function RestaurantsPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-white">Popular Restaurants</h1>
-        {selectedMeals.size > 0 && (
-          <Link href="/shopping-list">
-            <Button className="bg-emerald-500 hover:bg-emerald-600 text-white ml-4">
-              View Shopping List ({selectedMeals.size})
-            </Button>
-          </Link>
-        )}
       </div>
 
       {/* Mobile view - Shopping List Button */}
       {selectedMeals.size > 0 && (
-        <div className="lg:hidden mb-4">
-          <Link href="/shopping-list" className="w-full block">
-            <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white">
+        <div className="mb-6">
+          <Link href="/shopping-list" className="block">
+            <Button className="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white">
               View Shopping List ({selectedMeals.size})
             </Button>
           </Link>
@@ -238,12 +231,12 @@ export default function RestaurantsPage() {
                     <Button 
                       className={`flex-1 ${
                         selectedMeals.has(meal.id) 
-                          ? 'bg-emerald-500 hover:bg-emerald-600' 
+                          ? 'bg-red-500 hover:bg-red-600' 
                           : 'bg-zinc-700 hover:bg-zinc-600'
                       } text-white`}
                       onClick={() => toggleMealSelection(meal.id)}
                     >
-                      {selectedMeals.has(meal.id) ? 'Added to List' : 'Add Ingredients'}
+                      {selectedMeals.has(meal.id) ? 'Remove Ingredients' : 'Add Ingredients'}
                     </Button>
                   </div>
                 </div>
