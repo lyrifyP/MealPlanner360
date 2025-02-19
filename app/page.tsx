@@ -52,7 +52,7 @@ export default function Page() {
         <div className="max-w-md mx-auto space-y-4">
           {/* Restaurant Selection Card */}
           <div className="bg-zinc-800/50 rounded-lg p-6 hover:bg-zinc-800/70 transition-colors">
-            <h2 className="text-xl font-bold text-white mb-3">Browse Recipes from Top Restaurants</h2>
+            <h2 className="text-xl font-bold text-white mb-3 text-center">Browse Recipes from Top Restaurants</h2>
             <p className="text-sm text-zinc-400 mb-4">
               Explore dishes from your favourite restaurants. From fine dining to popular chains, we've got them all covered.
             </p>
@@ -79,7 +79,7 @@ export default function Page() {
           <div className="bg-zinc-800/50 rounded-lg p-6 hover:bg-zinc-800/70 transition-colors">
             <h2 className="text-xl font-bold text-white mb-3 text-center">Enter the Cookbook Vault</h2>
             <p className="text-sm text-zinc-400 mb-4">
-              Easily access a vast collection of hand picked recipe books from around the world.
+              Access a vast collection of hand picked recipe books from around the world.
             </p>
             <Button 
               className="w-full bg-emerald-500 hover:bg-emerald-600 text-white"
