@@ -123,7 +123,7 @@ export default function Page() {
               Find Your Dish
             </h3>
             <p className="text-sm text-zinc-400">
-              Browse through our collection of popular restaurant dishes and select your favorites
+              Browse through our collection of popular restaurant dishes and select your favourites
             </p>
             <div className="absolute -left-4 top-1/2 transform -translate-y-1/2 hidden md:block">
               <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">

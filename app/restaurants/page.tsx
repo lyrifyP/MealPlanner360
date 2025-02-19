@@ -125,16 +125,26 @@ export default function RestaurantsPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-white">Restaurant Favourites</h1>
+        <h1 className="text-3xl font-bold text-white">Popular Restaurants</h1>
         {selectedMeals.size > 0 && (
           <Link href="/shopping-list">
-            <Button className="bg-emerald-500 hover:bg-emerald-600">
-              <ShoppingCart className="mr-2 h-4 w-4" />
+            <Button className="bg-emerald-500 hover:bg-emerald-600 text-white ml-4">
               View Shopping List ({selectedMeals.size})
             </Button>
           </Link>
         )}
       </div>
+
+      {/* Mobile view - Shopping List Button */}
+      {selectedMeals.size > 0 && (
+        <div className="lg:hidden mb-4">
+          <Link href="/shopping-list" className="w-full block">
+            <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white">
+              View Shopping List ({selectedMeals.size})
+            </Button>
+          </Link>
+        </div>
+      )}
       
       {/* Restaurant Selector */}
       <div className="max-w-md mx-auto mb-12">
@@ -228,12 +238,12 @@ export default function RestaurantsPage() {
                     <Button 
                       className={`flex-1 ${
                         selectedMeals.has(meal.id) 
-                          ? 'bg-zinc-600 hover:bg-zinc-700' 
+                          ? 'bg-emerald-500 hover:bg-emerald-600' 
                           : 'bg-zinc-700 hover:bg-zinc-600'
-                      }`}
+                      } text-white`}
                       onClick={() => toggleMealSelection(meal.id)}
                     >
-                      {selectedMeals.has(meal.id) ? 'Remove' : 'Add to List'}
+                      {selectedMeals.has(meal.id) ? 'Added to List' : 'Add Ingredients'}
                     </Button>
                   </div>
                 </div>
