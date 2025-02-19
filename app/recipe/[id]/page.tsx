@@ -217,112 +217,96 @@ export default function RecipePage({ params }: { params: { id: string } }) {
       </div>
 
       {/* Chef's Top Picks Section */}
-      <div className="max-w-2xl mx-auto mt-8 mb-8">
-        <h2 className="text-xl font-semibold text-white mb-4">Chef's Top Picks - Enhance Your Cooking</h2>
-        <table className="w-full bg-zinc-800/50 rounded-lg">
-          <thead>
-            <tr>
-              <th className="text-left p-4 text-emerald-500">Preview</th>
-              <th className="text-left p-4 text-emerald-500">Item</th>
-              <th className="text-left p-4 text-emerald-500">Description</th>
-              <th className="text-left p-4 text-emerald-500">Shop</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* Must-Have Tool Row */}
-            {recipe.must_have_tool && (
-              <tr className="border-b border-zinc-700 bg-zinc-800/50">
-                <td className="p-4">
-                  {recipe.tool_image_url && (
-                    <img 
-                      src={recipe.tool_image_url} 
-                      alt={recipe.must_have_tool} 
-                      className="w-32 h-auto rounded-lg" 
-                    />
-                  )}
-                </td>
-                <td className="p-4">
-                  <span className="font-bold text-lg">{recipe.must_have_tool} 🔪</span>
-                </td>
-                <td className="p-4">{recipe.tool_description || 'No description available.'}</td>
-                <td className="p-4">
-                  {recipe.tool_affiliate_link && (
-                    <a 
-                      href={recipe.tool_affiliate_link} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="text-emerald-500 hover:underline"
-                    >
-                      View Here
-                    </a>
-                  )}
-                </td>
-              </tr>
-            )}
+      <div className="max-w-2xl mx-auto mt-8 mb-8 px-4 sm:px-0">
+        <h2 className="text-xl font-semibold text-white mb-4">Chef's Top Picks</h2>
+        <div className="space-y-4">
+          {/* Must-Have Tool Card */}
+          {recipe.must_have_tool && (
+            <div className="bg-zinc-800/50 rounded-lg p-4 flex flex-col sm:flex-row items-start">
+              <div className="flex-shrink-0">
+                {recipe.tool_image_url && (
+                  <img 
+                    src={recipe.tool_image_url} 
+                    alt={recipe.must_have_tool} 
+                    className="w-24 h-auto rounded-lg mb-2 sm:mb-0 sm:mr-4" 
+                  />
+                )}
+              </div>
+              <div className="flex-grow">
+                <span className="font-bold text-lg">{recipe.must_have_tool} 🔪</span>
+                <p className="text-sm">{recipe.tool_description || 'No description available.'}</p>
+                {recipe.tool_affiliate_link && (
+                  <a 
+                    href={recipe.tool_affiliate_link} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-emerald-500 hover:underline"
+                  >
+                    View Here
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
 
-            {/* Key Ingredient Row */}
-            {recipe.key_ingredient && (
-              <tr className="border-b border-zinc-700 bg-zinc-800/50">
-                <td className="p-4">
-                  {recipe.ingredient_image_url && (
-                    <img 
-                      src={recipe.ingredient_image_url} 
-                      alt={recipe.key_ingredient} 
-                      className="w-32 h-auto rounded-lg" 
-                    />
-                  )}
-                </td>
-                <td className="p-4">
-                  <span className="font-bold text-lg">{recipe.key_ingredient} 🌶️</span>
-                </td>
-                <td className="p-4">{recipe.ingredient_description || 'No description available.'}</td>
-                <td className="p-4">
-                  {recipe.ingredient_affiliate_link && (
-                    <a 
-                      href={recipe.ingredient_affiliate_link} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="text-emerald-500 hover:underline"
-                    >
-                      View Here
-                    </a>
-                  )}
-                </td>
-              </tr>
-            )}
+          {/* Key Ingredient Card */}
+          {recipe.key_ingredient && (
+            <div className="bg-zinc-800/50 rounded-lg p-4 flex flex-col sm:flex-row items-start">
+              <div className="flex-shrink-0">
+                {recipe.ingredient_image_url && (
+                  <img 
+                    src={recipe.ingredient_image_url} 
+                    alt={recipe.key_ingredient} 
+                    className="w-24 h-auto rounded-lg mb-2 sm:mb-0 sm:mr-4" 
+                  />
+                )}
+              </div>
+              <div className="flex-grow">
+                <span className="font-bold text-lg">{recipe.key_ingredient} 🌶️</span>
+                <p className="text-sm">{recipe.ingredient_description || 'No description available.'}</p>
+                {recipe.ingredient_affiliate_link && (
+                  <a 
+                    href={recipe.ingredient_affiliate_link} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-emerald-500 hover:underline"
+                  >
+                    View Here
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
 
-            {/* Time-Saving Shortcut Row */}
-            {recipe.time_saving_shortcut && (
-              <tr className="border-b border-zinc-700 bg-zinc-800/50">
-                <td className="p-4">
-                  {recipe.shortcut_image_url && (
-                    <img 
-                      src={recipe.shortcut_image_url} 
-                      alt={recipe.time_saving_shortcut} 
-                      className="w-32 h-auto rounded-lg" 
-                    />
-                  )}
-                </td>
-                <td className="p-4">
-                  <span className="font-bold text-lg">{recipe.time_saving_shortcut} ⏳</span>
-                </td>
-                <td className="p-4">{recipe.shortcut_description || 'No description available.'}</td>
-                <td className="p-4">
-                  {recipe.shortcut_affiliate_link && (
-                    <a 
-                      href={recipe.shortcut_affiliate_link} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="text-emerald-500 hover:underline"
-                    >
-                      View Here
-                    </a>
-                  )}
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+          {/* Time-Saving Shortcut Card */}
+          {recipe.time_saving_shortcut && (
+            <div className="bg-zinc-800/50 rounded-lg p-4 flex flex-col sm:flex-row items-start">
+              <div className="flex-shrink-0">
+                {recipe.shortcut_image_url && (
+                  <img 
+                    src={recipe.shortcut_image_url} 
+                    alt={recipe.time_saving_shortcut} 
+                    className="w-24 h-auto rounded-lg mb-2 sm:mb-0 sm:mr-4" 
+                  />
+                )}
+              </div>
+              <div className="flex-grow">
+                <span className="font-bold text-lg">{recipe.time_saving_shortcut} ⏳</span>
+                <p className="text-sm">{recipe.shortcut_description || 'No description available.'}</p>
+                {recipe.shortcut_affiliate_link && (
+                  <a 
+                    href={recipe.shortcut_affiliate_link} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-emerald-500 hover:underline"
+                  >
+                    View Here
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

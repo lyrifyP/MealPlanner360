@@ -77,7 +77,7 @@ export default function Page() {
 
           {/* Creator Marketplace for Recipes Section */}
           <div className="bg-zinc-800/50 rounded-lg p-6 hover:bg-zinc-800/70 transition-colors">
-            <h2 className="text-xl font-bold text-white mb-3 text-center">Enter the Cookbook Vault</h2>
+            <h2 className="text-xl font-bold text-white mb-3 text-center">Access Recipe Books</h2>
             <p className="text-sm text-zinc-400 mb-4">
               Access a vast collection of hand picked recipe books from around the world.
             </p>
@@ -86,7 +86,7 @@ export default function Page() {
               onClick={() => router.push('/creator-marketplace')}
             >
               <Book className="mr-2 h-4 w-4" />
-              Go to the Cookbook Vault
+              Enter the Cookbook Vault
             </Button>
           </div>
         </div>
