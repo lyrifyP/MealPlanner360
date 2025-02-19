@@ -52,9 +52,9 @@ export default function Page() {
         <div className="max-w-md mx-auto space-y-4">
           {/* Restaurant Selection Card */}
           <div className="bg-zinc-800/50 rounded-lg p-6 hover:bg-zinc-800/70 transition-colors">
-            <h2 className="text-xl font-bold text-white mb-3">Browse Top Restaurants</h2>
+            <h2 className="text-xl font-bold text-white mb-3">Browse Recipes from Top Restaurants</h2>
             <p className="text-sm text-zinc-400 mb-4">
-              Explore dishes from your favorite restaurants. From fine dining to popular chains, we've got them all covered.
+              Explore dishes from your favourite restaurants. From fine dining to popular chains, we've got them all covered.
             </p>
             <Button 
               className="w-full bg-emerald-500 hover:bg-emerald-600 text-white"
@@ -75,28 +75,18 @@ export default function Page() {
             </Button>
           </div>
 
-          {/* Shopping List Card */}
+          {/* Creator Marketplace for Recipes Section */}
           <div className="bg-zinc-800/50 rounded-lg p-6 hover:bg-zinc-800/70 transition-colors">
-            <h2 className="text-xl font-bold text-white mb-3">Smart Shopping Lists</h2>
+            <h2 className="text-xl font-bold text-white mb-3">Creator Marketplace for Recipes</h2>
             <p className="text-sm text-zinc-400 mb-4">
-              Select multiple dishes and get an automatically compiled shopping list with all the ingredients you need.
+              Promote your recipe books and connect with food enthusiasts.
             </p>
             <Button 
               className="w-full bg-emerald-500 hover:bg-emerald-600 text-white"
-              onClick={handleShoppingListClick}
-              disabled={isLoadingShoppingList}
+              onClick={() => router.push('/creator-marketplace')}
             >
-              {isLoadingShoppingList ? (
-                <div className="flex items-center justify-center">
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  <span>Loading...</span>
-                </div>
-              ) : (
-                <div className="flex items-center justify-center">
-                  <ShoppingCart className="mr-2 h-4 w-4" />
-                  <span>View Shopping List</span>
-                </div>
-              )}
+              <ChefHat className="mr-2 h-4 w-4" />
+              Go to Creator Marketplace
             </Button>
           </div>
         </div>
@@ -109,7 +99,7 @@ export default function Page() {
             How it Works
           </h2>
           <p className="text-zinc-400 max-w-2xl mx-auto">
-            Three simple steps to recreate your favorite restaurant dishes at home
+            Three simple steps to recreate your favourite restaurant dishes at home
           </p>
         </div>
 

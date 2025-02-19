@@ -228,16 +228,14 @@ export default function RestaurantsPage() {
                         'View Recipe'
                       )}
                     </Button>
-                    <Button 
-                      className={`flex-1 ${
-                        selectedMeals.has(meal.id) 
-                          ? 'bg-red-500 hover:bg-red-600' 
-                          : 'bg-zinc-700 hover:bg-zinc-600'
-                      } text-white`}
-                      onClick={() => toggleMealSelection(meal.id)}
-                    >
-                      {selectedMeals.has(meal.id) ? 'Remove Ingredients' : 'Add Ingredients'}
-                    </Button>
+                    {selectedMeals.has(meal.id) && (
+                      <Button 
+                        className="flex-1 bg-red-500 hover:bg-red-600 text-white"
+                        onClick={() => toggleMealSelection(meal.id)}
+                      >
+                        Remove Ingredients
+                      </Button>
+                    )}
                   </div>
                 </div>
               </div>

@@ -44,9 +44,9 @@ export default function ClientLayout({
                   Restaurants
                 </Button>
               </Link>
-              <Link href="/shopping-list">
+              <Link href="/creator-marketplace">
                 <Button variant="ghost" className="text-zinc-400 hover:text-white text-sm sm:text-base px-2 sm:px-4">
-                  Shopping List
+                  Creator Marketplace
                 </Button>
               </Link>
             </div>
