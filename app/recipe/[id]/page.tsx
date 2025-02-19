@@ -218,92 +218,80 @@ export default function RecipePage({ params }: { params: { id: string } }) {
 
       {/* Chef's Top Picks Section */}
       <div className="max-w-2xl mx-auto mt-8 mb-8">
-        <h2 className="text-xl font-semibold text-white mb-4">Chef's Top Picks - Enahnce Your Cooking</h2>
+        <h2 className="text-xl font-semibold text-white mb-4">Chef's Top Picks</h2>
         <div className="space-y-4">
           {/* Must-Have Tool Card */}
           {recipe.must_have_tool && (
-            <div className="bg-zinc-800/50 rounded-lg p-4 flex flex-col sm:flex-row items-start shadow-md border border-zinc-700">
-              <div className="flex-shrink-0">
-                {recipe.tool_image_url && (
-                  <img 
-                    src={recipe.tool_image_url} 
-                    alt={recipe.must_have_tool} 
-                    className="w-32 h-32 object-cover rounded-lg mb-2 sm:mb-0 sm:mr-4" 
-                  />
-                )}
-              </div>
-              <div className="flex-grow">
-                <span className="font-bold text-lg">{recipe.must_have_tool} 🔪</span>
-                <p className="text-sm">{recipe.tool_description || 'No description available.'}</p>
-                {recipe.tool_affiliate_link && (
-                  <a 
-                    href={recipe.tool_affiliate_link} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-emerald-500 hover:underline"
-                  >
-                    Shop Now
-                  </a>
-                )}
-              </div>
+            <div className="bg-zinc-800/50 rounded-lg p-4 flex flex-col items-center shadow-md border border-zinc-700">
+              {recipe.tool_image_url && (
+                <img 
+                  src={recipe.tool_image_url} 
+                  alt={recipe.must_have_tool} 
+                  className="w-32 h-32 object-cover rounded-lg mb-2" 
+                />
+              )}
+              <span className="font-bold text-lg text-center">{recipe.must_have_tool} 🔪</span>
+              <p className="text-sm text-center">{recipe.tool_description || 'No description available.'}</p>
+              {recipe.tool_affiliate_link && (
+                <a 
+                  href={recipe.tool_affiliate_link} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-emerald-500 hover:underline mt-2"
+                >
+                  Shop Now
+                </a>
+              )}
             </div>
           )}
 
           {/* Key Ingredient Card */}
           {recipe.key_ingredient && (
-            <div className="bg-zinc-800/50 rounded-lg p-4 flex flex-col sm:flex-row items-start shadow-md border border-zinc-700">
-              <div className="flex-shrink-0">
-                {recipe.ingredient_image_url && (
-                  <img 
-                    src={recipe.ingredient_image_url} 
-                    alt={recipe.key_ingredient} 
-                    className="w-32 h-32 object-cover rounded-lg mb-2 sm:mb-0 sm:mr-4" 
-                  />
-                )}
-              </div>
-              <div className="flex-grow">
-                <span className="font-bold text-lg">{recipe.key_ingredient} 🌶️</span>
-                <p className="text-sm">{recipe.ingredient_description || 'No description available.'}</p>
-                {recipe.ingredient_affiliate_link && (
-                  <a 
-                    href={recipe.ingredient_affiliate_link} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-emerald-500 hover:underline"
-                  >
-                    Shop Now
-                  </a>
-                )}
-              </div>
+            <div className="bg-zinc-800/50 rounded-lg p-4 flex flex-col items-center shadow-md border border-zinc-700">
+              {recipe.ingredient_image_url && (
+                <img 
+                  src={recipe.ingredient_image_url} 
+                  alt={recipe.key_ingredient} 
+                  className="w-32 h-32 object-cover rounded-lg mb-2" 
+                />
+              )}
+              <span className="font-bold text-lg text-center">{recipe.key_ingredient} 🌶️</span>
+              <p className="text-sm text-center">{recipe.ingredient_description || 'No description available.'}</p>
+              {recipe.ingredient_affiliate_link && (
+                <a 
+                  href={recipe.ingredient_affiliate_link} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-emerald-500 hover:underline mt-2"
+                >
+                  Shop Now
+                </a>
+              )}
             </div>
           )}
 
           {/* Time-Saving Shortcut Card */}
           {recipe.time_saving_shortcut && (
-            <div className="bg-zinc-800/50 rounded-lg p-4 flex flex-col sm:flex-row items-start shadow-md border border-zinc-700">
-              <div className="flex-shrink-0">
-                {recipe.shortcut_image_url && (
-                  <img 
-                    src={recipe.shortcut_image_url} 
-                    alt={recipe.time_saving_shortcut} 
-                    className="w-32 h-32 object-cover rounded-lg mb-2 sm:mb-0 sm:mr-4" 
-                  />
-                )}
-              </div>
-              <div className="flex-grow">
-                <span className="font-bold text-lg">{recipe.time_saving_shortcut} ⏳</span>
-                <p className="text-sm">{recipe.shortcut_description || 'No description available.'}</p>
-                {recipe.shortcut_affiliate_link && (
-                  <a 
-                    href={recipe.shortcut_affiliate_link} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-emerald-500 hover:underline"
-                  >
-                    Shop Now
-                  </a>
-                )}
-              </div>
+            <div className="bg-zinc-800/50 rounded-lg p-4 flex flex-col items-center shadow-md border border-zinc-700">
+              {recipe.shortcut_image_url && (
+                <img 
+                  src={recipe.shortcut_image_url} 
+                  alt={recipe.time_saving_shortcut} 
+                  className="w-32 h-32 object-cover rounded-lg mb-2" 
+                />
+              )}
+              <span className="font-bold text-lg text-center">{recipe.time_saving_shortcut} ⏳</span>
+              <p className="text-sm text-center">{recipe.shortcut_description || 'No description available.'}</p>
+              {recipe.shortcut_affiliate_link && (
+                <a 
+                  href={recipe.shortcut_affiliate_link} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-emerald-500 hover:underline mt-2"
+                >
+                  Shop Now
+                </a>
+              )}
             </div>
           )}
         </div>
