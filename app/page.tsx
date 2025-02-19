@@ -42,8 +42,7 @@ export default function Page() {
             </span>
           </h1>
           <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed px-4">
-            Love Exclusive Restaurant Dishes But Hate the Price? Recreate Them at Home with The Dine-In Club! 
-            Pick a restaurant, select a dish, and let our Smart AI instantly compile the ingredients you need.
+            Love Exclusive Restaurant Dishes But Hate the Price? Recreate Them at Home with The Dine-In Club!
           </p>
         </div>
       </div>

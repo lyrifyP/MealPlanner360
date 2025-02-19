@@ -45,6 +45,7 @@ export default function RestaurantsPage() {
   const [selectedMeals, setSelectedMeals] = useState<Set<number>>(new Set())
   const [isLoading, setIsLoading] = useState(true)
   const [isMealsLoading, setIsMealsLoading] = useState(false)
+  const [loadingRecipeId, setLoadingRecipeId] = useState<number | null>(null)
   
   const supabase = createClientComponentClient()
   const router = useRouter()
@@ -209,16 +210,27 @@ export default function RestaurantsPage() {
                   <div className="flex gap-3">
                     <Button 
                       className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white"
-                      onClick={() => router.push(`/recipe/${meal.id}`)}
+                      onClick={() => {
+                        setLoadingRecipeId(meal.id)
+                        router.push(`/recipe/${meal.id}`)
+                      }}
+                      disabled={loadingRecipeId === meal.id}
                     >
-                      View Recipe
+                      {loadingRecipeId === meal.id ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Generating Smart AI
+                        </>
+                      ) : (
+                        'View Recipe'
+                      )}
                     </Button>
                     <Button 
                       className={`flex-1 ${
-                        selectedMeals.has(meal.id)
-                          ? 'bg-red-500 hover:bg-red-600'
-                          : 'bg-zinc-600 hover:bg-zinc-700'
-                      } text-white`}
+                        selectedMeals.has(meal.id) 
+                          ? 'bg-zinc-600 hover:bg-zinc-700' 
+                          : 'bg-zinc-700 hover:bg-zinc-600'
+                      }`}
                       onClick={() => toggleMealSelection(meal.id)}
                     >
                       {selectedMeals.has(meal.id) ? 'Remove' : 'Add to List'}
@@ -232,4 +244,4 @@ export default function RestaurantsPage() {
       )}
     </div>
   )
-} 
+}

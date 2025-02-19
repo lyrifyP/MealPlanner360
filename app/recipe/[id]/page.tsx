@@ -26,7 +26,7 @@ type Ingredient = {
 export default function RecipePage({ params }: { params: { id: string } }) {
   const [recipe, setRecipe] = useState<Recipe | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState<'ingredients' | 'instructions'>('ingredients')
+  const [activeTab, setActiveTab] = useState<'ingredients' | 'instructions'>('instructions')
   const supabase = createClientComponentClient()
 
   useEffect(() => {
@@ -156,37 +156,22 @@ export default function RecipePage({ params }: { params: { id: string } }) {
       <div className="max-w-2xl mx-auto">
         <div className="flex rounded-t-lg overflow-hidden mb-6">
           <TabButton 
+            tab="instructions" 
+            label="Recipe" 
+            icon={ScrollText}
+          />
+          <TabButton 
             tab="ingredients" 
             label="Ingredients" 
             icon={UtensilsCrossed}
-          />
-          <TabButton 
-            tab="instructions" 
-            label="Instructions" 
-            icon={ScrollText}
           />
         </div>
 
         {/* Content */}
         <div className="bg-zinc-800/50 rounded-lg p-6">
-          {activeTab === 'ingredients' ? (
+          {activeTab === 'instructions' ? (
             <>
-              <h2 className="text-xl font-semibold text-white mb-4">Ingredients</h2>
-              <ul className="space-y-3">
-                {recipe.ingredients.map((ingredient, index) => (
-                  <li 
-                    key={index}
-                    className="flex justify-between text-sm border-b border-zinc-700 pb-2 last:border-0 last:pb-0"
-                  >
-                    <span className="text-zinc-300">{ingredient.ingredientName}</span>
-                    <span className="text-emerald-500 font-medium">{ingredient.quantity}</span>
-                  </li>
-                ))}
-              </ul>
-            </>
-          ) : (
-            <>
-              <h2 className="text-xl font-semibold text-white mb-4">Instructions</h2>
+              <h2 className="text-xl font-semibold text-white mb-4">Recipe</h2>
               <div className="space-y-6">
                 {recipe.recipe.Steps.map((step, index) => (
                   <div key={index} className="flex gap-4">
@@ -197,6 +182,23 @@ export default function RecipePage({ params }: { params: { id: string } }) {
                   </div>
                 ))}
               </div>
+            </>
+          ) : (
+            <>
+              <h2 className="text-xl font-semibold text-white mb-4">Ingredients</h2>
+              <ul className="space-y-3">
+                {recipe.ingredients
+                  .sort((a, b) => a.ingredientName.localeCompare(b.ingredientName))
+                  .map((ingredient, index) => (
+                    <li 
+                      key={index}
+                      className="flex justify-between text-sm border-b border-zinc-700 pb-2 last:border-0 last:pb-0"
+                    >
+                      <span className="text-zinc-300">{ingredient.ingredientName}</span>
+                      <span className="text-emerald-500 font-medium">{ingredient.quantity}</span>
+                    </li>
+                  ))}
+              </ul>
             </>
           )}
         </div>
