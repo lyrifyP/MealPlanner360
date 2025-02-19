@@ -1,120 +1,171 @@
 "use client"
 
-import Link from "next/link"
-import { ChefHat, ShoppingCart, Loader2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
+import { ChefHat, ShoppingCart, Search, ListChecks, UtensilsCrossed, Loader2 } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 export default function Page() {
-  const [isHovering, setIsHovering] = useState({ cuisine: false, restaurant: false });
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoadingRestaurant, setIsLoadingRestaurant] = useState(false);
-  const router = useRouter();
+  const [isLoadingRestaurants, setIsLoadingRestaurants] = useState(false)
+  const [isLoadingShoppingList, setIsLoadingShoppingList] = useState(false)
+  const router = useRouter()
 
-  const handleExplore = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 800));
-    router.push('/cuisines');
-  };
+  const handleRestaurantsClick = async () => {
+    setIsLoadingRestaurants(true)
+    await new Promise(resolve => setTimeout(resolve, 800))
+    router.push('/restaurants')
+  }
 
-  const handleRestaurantExplore = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsLoadingRestaurant(true);
-    await new Promise(resolve => setTimeout(resolve, 800));
-    router.push('/restaurants');
-  };
+  const handleShoppingListClick = async () => {
+    setIsLoadingShoppingList(true)
+    await new Promise(resolve => setTimeout(resolve, 800))
+    router.push('/shopping-list')
+  }
+
+  const scrollToHowItWorks = () => {
+    const element = document.getElementById('how-it-works')
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
 
   return (
     <div>
-      {/* Hero Section */}
-      <div className="container mx-auto px-4 py-20 relative">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
-            Transform Your Meal Planning with{" "}
+      {/* Hero Section - removed button, reduced padding */}
+      <div className="container mx-auto px-4 py-8 md:py-12 relative">
+        <div className="max-w-3xl mx-auto text-center space-y-6">
+          <h1 className="text-3xl md:text-5xl font-bold text-white tracking-tight">
+            Welcome to{" "}
             <span className="bg-gradient-to-r from-emerald-400 to-teal-500 text-transparent bg-clip-text">
-              FoodPlanner360
+              The Dine-In Club
             </span>
           </h1>
-          <p className="text-xl text-zinc-400 max-w-2xl mx-auto">
-            Plan your meals, generate shopping lists, and discover new recipes tailored to your preferences and dietary needs.
+          <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed px-4">
+            Love Exclusive Restaurant Dishes But Hate the Price? Recreate Them at Home with The Dine-In Club! 
+            Pick a restaurant, select a dish, and let our Smart AI instantly compile the ingredients you need.
           </p>
-        </div>
-
-        {/* Floating Icons */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <ChefHat className="absolute top-20 left-20 h-12 w-12 text-emerald-500/20 animate-float" />
-          <ShoppingCart className="absolute bottom-20 left-32 h-14 w-14 text-emerald-500/20 animate-float" />
         </div>
       </div>
 
-      {/* Meal Selection Section */}
-      <div className="container mx-auto px-4 sm:px-6 max-w-4xl">
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Cuisine Type Card */}
-          <div 
-            className="bg-zinc-800/50 rounded-lg p-5 sm:p-8 hover:bg-zinc-800/70 transition-all duration-300 cursor-pointer relative overflow-hidden"
-            onMouseEnter={() => setIsHovering(prev => ({...prev, cuisine: true}))}
-            onMouseLeave={() => setIsHovering(prev => ({...prev, cuisine: false}))}
-          >
-            <div className={`absolute inset-0 bg-emerald-500/10 transform transition-transform duration-500 ease-in-out ${
-              isHovering.cuisine ? 'scale-100' : 'scale-0'
-            }`} />
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 relative z-10">Browse by Cuisine</h2>
-            <p className="text-sm sm:text-base text-zinc-400 mb-4 sm:mb-6 relative z-10">
-              Explore dishes from Italian, Japanese, Mexican, Indian, and many more cuisines from around the world.
+      {/* Features Grid - moved up */}
+      <div className="container mx-auto px-4">
+        <div className="max-w-md mx-auto space-y-4">
+          {/* Restaurant Selection Card */}
+          <div className="bg-zinc-800/50 rounded-lg p-6 hover:bg-zinc-800/70 transition-colors">
+            <h2 className="text-xl font-bold text-white mb-3">Browse Top Restaurants</h2>
+            <p className="text-sm text-zinc-400 mb-4">
+              Explore dishes from your favorite restaurants. From fine dining to popular chains, we've got them all covered.
             </p>
-            <div className="flex justify-center relative z-10">
-              <Button 
-                onClick={handleExplore}
-                disabled={isLoading}
-                className={`bg-emerald-500 hover:bg-emerald-600 text-white transform transition-all duration-300 ${
-                  isHovering.cuisine && !isLoading ? 'scale-105 shadow-lg shadow-emerald-500/20' : ''
-                }`}
-              >
-                {isLoading ? (
-                  <div className="flex items-center gap-2">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    <span>Loading...</span>
-                  </div>
-                ) : (
-                  'Explore Cuisines'
-                )}
-              </Button>
+            <Button 
+              className="w-full bg-emerald-500 hover:bg-emerald-600 text-white"
+              onClick={handleRestaurantsClick}
+              disabled={isLoadingRestaurants}
+            >
+              {isLoadingRestaurants ? (
+                <div className="flex items-center justify-center">
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <span>Loading...</span>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center">
+                  <ChefHat className="mr-2 h-4 w-4" />
+                  <span>View Restaurants</span>
+                </div>
+              )}
+            </Button>
+          </div>
+
+          {/* Shopping List Card */}
+          <div className="bg-zinc-800/50 rounded-lg p-6 hover:bg-zinc-800/70 transition-colors">
+            <h2 className="text-xl font-bold text-white mb-3">Smart Shopping Lists</h2>
+            <p className="text-sm text-zinc-400 mb-4">
+              Select multiple dishes and get an automatically compiled shopping list with all the ingredients you need.
+            </p>
+            <Button 
+              className="w-full bg-emerald-500 hover:bg-emerald-600 text-white"
+              onClick={handleShoppingListClick}
+              disabled={isLoadingShoppingList}
+            >
+              {isLoadingShoppingList ? (
+                <div className="flex items-center justify-center">
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <span>Loading...</span>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center">
+                  <ShoppingCart className="mr-2 h-4 w-4" />
+                  <span>View Shopping List</span>
+                </div>
+              )}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* How it Works Section - added id */}
+      <div id="how-it-works" className="container mx-auto px-4 py-16">
+        <div className="text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+            How it Works
+          </h2>
+          <p className="text-zinc-400 max-w-2xl mx-auto">
+            Three simple steps to recreate your favorite restaurant dishes at home
+          </p>
+        </div>
+
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Step 1 */}
+          <div className="bg-zinc-800/30 rounded-lg p-6 text-center relative group hover:bg-zinc-800/50 transition-all">
+            <div className="w-12 h-12 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-500/20 transition-all">
+              <Search className="h-6 w-6 text-emerald-500" />
+            </div>
+            <h3 className="text-lg font-semibold text-white mb-2">
+              Find Your Dish
+            </h3>
+            <p className="text-sm text-zinc-400">
+              Browse through our collection of popular restaurant dishes and select your favorites
+            </p>
+            <div className="absolute -left-4 top-1/2 transform -translate-y-1/2 hidden md:block">
+              <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">
+                1
+              </div>
             </div>
           </div>
 
-          {/* Popular Restaurant Card */}
-          <div 
-            className="bg-zinc-800/50 rounded-lg p-5 sm:p-8 hover:bg-zinc-800/70 transition-all duration-300 cursor-pointer relative overflow-hidden"
-            onMouseEnter={() => setIsHovering(prev => ({...prev, restaurant: true}))}
-            onMouseLeave={() => setIsHovering(prev => ({...prev, restaurant: false}))}
-          >
-            <div className={`absolute inset-0 bg-emerald-500/10 transform transition-transform duration-500 ease-in-out ${
-              isHovering.restaurant ? 'scale-100' : 'scale-0'
-            }`} />
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 relative z-10">Popular Restaurant Dishes</h2>
-            <p className="text-sm sm:text-base text-zinc-400 mb-4 sm:mb-6 relative z-10">
-              Learn to make your favorite restaurant meals at home with our curated collection of copycat recipes.
+          {/* Step 2 */}
+          <div className="bg-zinc-800/30 rounded-lg p-6 text-center relative group hover:bg-zinc-800/50 transition-all">
+            <div className="w-12 h-12 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-500/20 transition-all">
+              <ListChecks className="h-6 w-6 text-emerald-500" />
+            </div>
+            <h3 className="text-lg font-semibold text-white mb-2">
+              Get Your Shopping List
+            </h3>
+            <p className="text-sm text-zinc-400">
+              Select multiple dishes and get an instant, organized list of all ingredients needed
             </p>
-            <div className="flex justify-center relative z-10">
-              <Button 
-                onClick={handleRestaurantExplore}
-                disabled={isLoadingRestaurant}
-                className={`bg-emerald-500 hover:bg-emerald-600 text-white transform transition-all duration-300 ${
-                  isHovering.restaurant && !isLoadingRestaurant ? 'scale-105 shadow-lg shadow-emerald-500/20' : ''
-                }`}
-              >
-                {isLoadingRestaurant ? (
-                  <div className="flex items-center gap-2">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    <span>Loading...</span>
-                  </div>
-                ) : (
-                  'View Restaurant Dishes'
-                )}
-              </Button>
+            <div className="absolute -left-4 top-1/2 transform -translate-y-1/2 hidden md:block">
+              <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">
+                2
+              </div>
+            </div>
+          </div>
+
+          {/* Step 3 */}
+          <div className="bg-zinc-800/30 rounded-lg p-6 text-center relative group hover:bg-zinc-800/50 transition-all">
+            <div className="w-12 h-12 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-emerald-500/20 transition-all">
+              <UtensilsCrossed className="h-6 w-6 text-emerald-500" />
+            </div>
+            <h3 className="text-lg font-semibold text-white mb-2">
+              Cook Like a Pro
+            </h3>
+            <p className="text-sm text-zinc-400">
+              Follow our detailed recipes to recreate restaurant-quality dishes in your own kitchen
+            </p>
+            <div className="absolute -left-4 top-1/2 transform -translate-y-1/2 hidden md:block">
+              <div className="w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center font-bold">
+                3
+              </div>
             </div>
           </div>
         </div>
