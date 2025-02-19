@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select"
 import { Utensils, Loader2, ShoppingCart } from "lucide-react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 // Reuse the same types from cuisines page
 type Meal = {
@@ -46,6 +47,7 @@ export default function RestaurantsPage() {
   const [isMealsLoading, setIsMealsLoading] = useState(false)
   
   const supabase = createClientComponentClient()
+  const router = useRouter()
 
   // Fetch unique restaurants for dropdown
   useEffect(() => {
@@ -122,7 +124,7 @@ export default function RestaurantsPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-white">Restaurant Favorites</h1>
+        <h1 className="text-3xl font-bold text-white">Restaurant Favourites</h1>
         {selectedMeals.size > 0 && (
           <Link href="/shopping-list">
             <Button className="bg-emerald-500 hover:bg-emerald-600">
@@ -207,7 +209,7 @@ export default function RestaurantsPage() {
                   <div className="flex gap-3">
                     <Button 
                       className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-white"
-                      onClick={() => {/* View Recipe handler */}}
+                      onClick={() => router.push(`/recipe/${meal.id}`)}
                     >
                       View Recipe
                     </Button>

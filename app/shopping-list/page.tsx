@@ -99,11 +99,8 @@ export default function ShoppingListPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin text-emerald-500 mx-auto" />
-          <p className="text-white mt-4">Loading your shopping list...</p>
-        </div>
+      <div className="container mx-auto px-4 py-8 flex justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-emerald-500" />
       </div>
     )
   }
@@ -119,10 +116,10 @@ export default function ShoppingListPage() {
             {JSON.stringify(localStorage.getItem('selectedMealIds'), null, 2)}
           </pre>
         </div>
-        <Link href="/cuisines">
+        <Link href="/restaurants">
           <Button className="bg-emerald-500 hover:bg-emerald-600">
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Cuisines
+            Back to Restaurants
           </Button>
         </Link>
       </div>
@@ -131,21 +128,21 @@ export default function ShoppingListPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
         <div className="flex items-center gap-4">
-          <Link href="/cuisines">
+          <Link href="/restaurants">
             <Button variant="ghost" className="text-zinc-400 hover:text-white">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Meals
+              Back to Restaurants
             </Button>
           </Link>
-          <h1 className="text-3xl font-bold text-white">Shopping List</h1>
         </div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white">Shopping List</h1>
         {selectedMeals.length > 0 && (
           <Button 
             variant="destructive" 
             onClick={clearShoppingList}
-            className="bg-red-500 hover:bg-red-600"
+            className="bg-red-500 hover:bg-red-600 sm:ml-auto"
           >
             <Trash2 className="h-4 w-4 mr-2" />
             Clear List
@@ -156,9 +153,9 @@ export default function ShoppingListPage() {
       {selectedMeals.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-zinc-400">No meals selected. Add some meals to create your shopping list!</p>
-          <Link href="/cuisines">
+          <Link href="/restaurants">
             <Button className="mt-4 bg-emerald-500 hover:bg-emerald-600">
-              Browse Meals
+              Browse Restaurants
             </Button>
           </Link>
         </div>
@@ -173,7 +170,7 @@ export default function ShoppingListPage() {
                   key={meal.id}
                   className="bg-zinc-800/50 rounded-lg p-4 flex items-center gap-4"
                 >
-                  <div className="h-16 w-16 bg-zinc-700 rounded overflow-hidden">
+                  <div className="h-16 w-16 bg-zinc-700 rounded overflow-hidden flex-shrink-0">
                     {meal.image_url ? (
                       <img 
                         src={meal.image_url} 
@@ -186,8 +183,8 @@ export default function ShoppingListPage() {
                       </div>
                     )}
                   </div>
-                  <div>
-                    <h3 className="text-white font-medium">{meal.meal_name}</h3>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-white font-medium truncate">{meal.meal_name}</h3>
                     <p className="text-sm text-zinc-400">{meal.ingredients.length} ingredients</p>
                   </div>
                 </div>
@@ -201,12 +198,12 @@ export default function ShoppingListPage() {
             <div className="bg-zinc-800/50 rounded-lg p-6">
               <div className="space-y-4">
                 {Object.entries(combinedIngredients).map(([ingredient, details]) => (
-                  <div key={ingredient} className="flex justify-between items-start pb-4 border-b border-zinc-700">
-                    <div>
-                      <p className="text-white font-medium">{ingredient}</p>
-                      <p className="text-sm text-zinc-400">Used in: {details.meals.join(', ')}</p>
+                  <div key={ingredient} className="flex justify-between items-start pb-4 border-b border-zinc-700 gap-4">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-white font-medium truncate">{ingredient}</p>
+                      <p className="text-sm text-zinc-400 truncate">Used in: {details.meals.join(', ')}</p>
                     </div>
-                    <span className="text-emerald-500 font-medium">{details.quantity}</span>
+                    <span className="text-emerald-500 font-medium whitespace-nowrap">{details.quantity}</span>
                   </div>
                 ))}
               </div>
