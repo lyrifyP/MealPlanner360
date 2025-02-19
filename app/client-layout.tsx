@@ -32,13 +32,14 @@ export default function ClientLayout({
               </span>
             </Link>
             <div className="ml-auto flex items-center gap-2 sm:gap-4">
-              <Button 
+              {/* How it Works Section - commented out */}
+              {/* <Button 
                 variant="ghost" 
                 className="text-zinc-400 hover:text-white text-sm sm:text-base px-2 sm:px-4"
                 onClick={handleHowItWorksClick}
               >
                 How it Works
-              </Button>
+              </Button> */}
               <Link href="/restaurants">
                 <Button variant="ghost" className="text-zinc-400 hover:text-white text-sm sm:text-base px-2 sm:px-4">
                   Restaurants
@@ -46,12 +47,28 @@ export default function ClientLayout({
               </Link>
               <Link href="/creator-marketplace">
                 <Button variant="ghost" className="text-zinc-400 hover:text-white text-sm sm:text-base px-2 sm:px-4">
-                  Creator Marketplace
+                  Cookbook Vault
                 </Button>
               </Link>
             </div>
           </div>
         </div>
+        {/* How it Works Section - commented out */}
+        {/* <div id="how-it-works" className="container mx-auto px-4 py-16"> */}
+        {/*   <div className="text-center mb-12"> */}
+        {/*     <h2 className="text-2xl md:text-3xl font-bold text-white mb-4"> */}
+        {/*       How it Works */}
+        {/*     </h2> */}
+        {/*     <p className="text-zinc-400 max-w-2xl mx-auto"> */}
+        {/*       Three simple steps to recreate your favourite restaurant dishes at home */}
+        {/*     </p> */}
+        {/*   </div> */}
+
+        {/*   <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8"> */}
+        {/*     ... steps ... */}
+        {/*   </div> */}
+        {/* </div> */}
+
         {children}
       </div>
     </body>
