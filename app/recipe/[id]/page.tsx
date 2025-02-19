@@ -217,18 +217,18 @@ export default function RecipePage({ params }: { params: { id: string } }) {
       </div>
 
       {/* Chef's Top Picks Section */}
-      <div className="max-w-2xl mx-auto mt-8 mb-8 px-4 sm:px-0">
-        <h2 className="text-xl font-semibold text-white mb-4">Chef's Top Picks</h2>
+      <div className="max-w-2xl mx-auto mt-8 mb-8">
+        <h2 className="text-xl font-semibold text-white mb-4">Chef's Top Picks - Enahnce Your Cooking</h2>
         <div className="space-y-4">
           {/* Must-Have Tool Card */}
           {recipe.must_have_tool && (
-            <div className="bg-zinc-800/50 rounded-lg p-4 flex flex-col sm:flex-row items-start">
+            <div className="bg-zinc-800/50 rounded-lg p-4 flex flex-col sm:flex-row items-start shadow-md border border-zinc-700">
               <div className="flex-shrink-0">
                 {recipe.tool_image_url && (
                   <img 
                     src={recipe.tool_image_url} 
                     alt={recipe.must_have_tool} 
-                    className="w-24 h-auto rounded-lg mb-2 sm:mb-0 sm:mr-4" 
+                    className="w-32 h-32 object-cover rounded-lg mb-2 sm:mb-0 sm:mr-4" 
                   />
                 )}
               </div>
@@ -242,7 +242,7 @@ export default function RecipePage({ params }: { params: { id: string } }) {
                     rel="noopener noreferrer" 
                     className="text-emerald-500 hover:underline"
                   >
-                    View Here
+                    Shop Now
                   </a>
                 )}
               </div>
@@ -251,13 +251,13 @@ export default function RecipePage({ params }: { params: { id: string } }) {
 
           {/* Key Ingredient Card */}
           {recipe.key_ingredient && (
-            <div className="bg-zinc-800/50 rounded-lg p-4 flex flex-col sm:flex-row items-start">
+            <div className="bg-zinc-800/50 rounded-lg p-4 flex flex-col sm:flex-row items-start shadow-md border border-zinc-700">
               <div className="flex-shrink-0">
                 {recipe.ingredient_image_url && (
                   <img 
                     src={recipe.ingredient_image_url} 
                     alt={recipe.key_ingredient} 
-                    className="w-24 h-auto rounded-lg mb-2 sm:mb-0 sm:mr-4" 
+                    className="w-32 h-32 object-cover rounded-lg mb-2 sm:mb-0 sm:mr-4" 
                   />
                 )}
               </div>
@@ -271,7 +271,7 @@ export default function RecipePage({ params }: { params: { id: string } }) {
                     rel="noopener noreferrer" 
                     className="text-emerald-500 hover:underline"
                   >
-                    View Here
+                    Shop Now
                   </a>
                 )}
               </div>
@@ -280,13 +280,13 @@ export default function RecipePage({ params }: { params: { id: string } }) {
 
           {/* Time-Saving Shortcut Card */}
           {recipe.time_saving_shortcut && (
-            <div className="bg-zinc-800/50 rounded-lg p-4 flex flex-col sm:flex-row items-start">
+            <div className="bg-zinc-800/50 rounded-lg p-4 flex flex-col sm:flex-row items-start shadow-md border border-zinc-700">
               <div className="flex-shrink-0">
                 {recipe.shortcut_image_url && (
                   <img 
                     src={recipe.shortcut_image_url} 
                     alt={recipe.time_saving_shortcut} 
-                    className="w-24 h-auto rounded-lg mb-2 sm:mb-0 sm:mr-4" 
+                    className="w-32 h-32 object-cover rounded-lg mb-2 sm:mb-0 sm:mr-4" 
                   />
                 )}
               </div>
@@ -300,7 +300,7 @@ export default function RecipePage({ params }: { params: { id: string } }) {
                     rel="noopener noreferrer" 
                     className="text-emerald-500 hover:underline"
                   >
-                    View Here
+                    Shop Now
                   </a>
                 )}
               </div>
