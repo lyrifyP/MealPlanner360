@@ -145,10 +145,10 @@ export default function Page() {
           </div>
 
           {/* Request a Recipe Section */}
-          <div className="bg-zinc-800/50 rounded-lg p-6 hover:bg-zinc-800/70 transition-colors">
+          <div id="request-recipe" className="bg-zinc-800/50 rounded-lg p-6 hover:bg-zinc-800/70 transition-colors">
             <h2 className="text-xl font-bold text-white mb-3 text-center">Request a Recipe</h2>
             <p className="text-sm text-zinc-400 mb-4">
-              Can't find your favorite restaurant dish? Request it and we'll add it to our collection.
+              Can't find your favourite restaurant dish? Request it and we'll add it to our collection.
             </p>
             
             {requestStatus === "success" && (

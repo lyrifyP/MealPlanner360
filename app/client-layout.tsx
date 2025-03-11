@@ -31,25 +31,31 @@ export default function ClientLayout({
                 The Dine-In Club
               </span>
             </Link>
+            {/* How it Works Section - commented out */}
+            {/* <Button 
+              variant="ghost" 
+              className="text-zinc-400 hover:text-white text-sm sm:text-base px-2 sm:px-4"
+              onClick={handleHowItWorksClick}
+            >
+              How it Works
+            </Button> */}
             <div className="ml-auto flex items-center gap-2 sm:gap-4">
-              {/* How it Works Section - commented out */}
-              {/* <Button 
-                variant="ghost" 
-                className="text-zinc-400 hover:text-white text-sm sm:text-base px-2 sm:px-4"
-                onClick={handleHowItWorksClick}
-              >
-                How it Works
-              </Button> */}
               <Link href="/restaurants">
                 <Button variant="ghost" className="text-zinc-400 hover:text-white text-sm sm:text-base px-2 sm:px-4">
                   Restaurants
                 </Button>
               </Link>
-              <Link href="/creator-marketplace">
+              <Link href="/#request-recipe">
+                <Button variant="ghost" className="text-zinc-400 hover:text-white text-sm sm:text-base px-2 sm:px-4">
+                  Request a Recipe
+                </Button>
+              </Link>
+              {/* Cookbook Vault link - commented out for now */}
+              {/* <Link href="/creator-marketplace">
                 <Button variant="ghost" className="text-zinc-400 hover:text-white text-sm sm:text-base px-2 sm:px-4">
                   Cookbook Vault
                 </Button>
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
