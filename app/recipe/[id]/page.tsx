@@ -39,7 +39,22 @@ export default function RecipePage({ params }: { params: { id: string } }) {
   const [recipe, setRecipe] = useState<Recipe | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<'ingredients' | 'instructions'>('instructions')
+  const [checkedIngredients, setCheckedIngredients] = useState<Record<string, boolean>>({})
   const supabase = createClientComponentClient()
+
+  // Load checked ingredients from localStorage when recipe loads
+  useEffect(() => {
+    if (recipe) {
+      const storedCheckedIngredients = localStorage.getItem(`recipe-${params.id}-ingredients`)
+      if (storedCheckedIngredients) {
+        try {
+          setCheckedIngredients(JSON.parse(storedCheckedIngredients))
+        } catch (e) {
+          console.error('Error parsing stored ingredients:', e)
+        }
+      }
+    }
+  }, [recipe, params.id])
 
   useEffect(() => {
     async function fetchRecipe() {
@@ -75,6 +90,27 @@ export default function RecipePage({ params }: { params: { id: string } }) {
 
     fetchRecipe()
   }, [params.id])
+
+  // Toggle ingredient checked state and save to localStorage
+  const toggleIngredient = (ingredientName: string) => {
+    setCheckedIngredients(prev => {
+      const updated = {
+        ...prev,
+        [ingredientName]: !prev[ingredientName]
+      }
+      
+      // Save to localStorage
+      localStorage.setItem(`recipe-${params.id}-ingredients`, JSON.stringify(updated))
+      
+      return updated
+    })
+  }
+
+  // Add a function to clear all checked ingredients
+  const clearCheckedIngredients = () => {
+    setCheckedIngredients({})
+    localStorage.removeItem(`recipe-${params.id}-ingredients`)
+  }
 
   const TabButton = ({ tab, label, icon: Icon }: { 
     tab: 'ingredients' | 'instructions', 
@@ -197,17 +233,41 @@ export default function RecipePage({ params }: { params: { id: string } }) {
             </>
           ) : (
             <>
-              <h2 className="text-xl font-semibold text-white mb-4">Ingredients</h2>
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold text-white">Ingredients</h2>
+                <button
+                  onClick={clearCheckedIngredients}
+                  className="text-xs text-zinc-400 hover:text-emerald-500 transition-colors"
+                >
+                  Clear All
+                </button>
+              </div>
               <ul className="space-y-3">
                 {recipe.ingredients
                   .sort((a, b) => a.ingredientName.localeCompare(b.ingredientName))
                   .map((ingredient, index) => (
                     <li 
                       key={index}
-                      className="flex justify-between text-sm border-b border-zinc-700 pb-2 last:border-0 last:pb-0"
+                      className="flex items-center text-sm border-b border-zinc-700 pb-2 last:border-0 last:pb-0"
                     >
-                      <span className="text-zinc-300">{ingredient.ingredientName}</span>
-                      <span className="text-emerald-500 font-medium">{ingredient.quantity}</span>
+                      <input
+                        type="checkbox"
+                        id={`ingredient-${index}`}
+                        checked={!!checkedIngredients[ingredient.ingredientName]}
+                        onChange={() => toggleIngredient(ingredient.ingredientName)}
+                        className="mr-3 h-4 w-4 rounded border-zinc-600 text-emerald-500 focus:ring-emerald-500 focus:ring-offset-zinc-900"
+                      />
+                      <label 
+                        htmlFor={`ingredient-${index}`}
+                        className={`flex-1 flex justify-between cursor-pointer ${
+                          checkedIngredients[ingredient.ingredientName] ? 'line-through text-zinc-500' : 'text-zinc-300'
+                        }`}
+                      >
+                        <span>{ingredient.ingredientName}</span>
+                        <span className={checkedIngredients[ingredient.ingredientName] ? 'text-zinc-500' : 'text-emerald-500 font-medium'}>
+                          {ingredient.quantity}
+                        </span>
+                      </label>
                     </li>
                   ))}
               </ul>

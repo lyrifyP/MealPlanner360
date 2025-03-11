@@ -20,6 +20,16 @@ export default function ClientLayout({
     }
   }
 
+  const handleRequestRecipeClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    const element = document.getElementById('request-recipe')
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      window.location.href = '/#request-recipe'
+    }
+  }
+
   return (
     <body className={cn("min-h-screen bg-gradient-to-b from-zinc-900 to-zinc-950")}>
       <div className="relative flex min-h-screen flex-col">
@@ -45,11 +55,13 @@ export default function ClientLayout({
                   Restaurants
                 </Button>
               </Link>
-              <Link href="/#request-recipe">
-                <Button variant="ghost" className="text-zinc-400 hover:text-white text-sm sm:text-base px-2 sm:px-4">
-                  Request a Recipe
-                </Button>
-              </Link>
+              <Button 
+                variant="ghost" 
+                className="text-zinc-400 hover:text-white text-sm sm:text-base px-2 sm:px-4"
+                onClick={handleRequestRecipeClick}
+              >
+                Request a Recipe
+              </Button>
               {/* Cookbook Vault link - commented out for now */}
               {/* <Link href="/creator-marketplace">
                 <Button variant="ghost" className="text-zinc-400 hover:text-white text-sm sm:text-base px-2 sm:px-4">
